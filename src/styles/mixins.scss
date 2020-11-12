@@ -1,0 +1,10 @@
+@mixin day($size) {
+  width: $size;
+  height: $size;
+  border: $size/100 solid;
+  margin: $size/100;
+}
+
+@mixin calc($property, $expression...) {
+  #{$property}: calc(#{$expression});
+} 
