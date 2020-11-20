@@ -15,32 +15,30 @@ html {
   margin: auto;
 }
 
+.calendar > div:nth-child(n) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include day($day-width);
+  background-color: #eee;
+  transform: translateY(0);
+  transition: background-color 0.5s, transform 0.5s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: pink;
+    transform: translateY(-20px);
+  }
+}
+
 @for $i from 1 through 31 {
-  .calendar > *:nth-child(#{$i}n) {
-    @include day($day-width);
-
-    background-color: #eee;
-    transform: translateY(0);
-    transition: background-color 0.5s, transform 0.5s ease-in-out;
-    cursor: pointer;
-
-    &::after {
-      content: "#{$i}";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    &:hover {
-      background-color: pink;
-      transform: translateY(-20px);
-    }
+  .calendar > div:nth-child(#{$i}n)::after {
+    content: "#{$i}";
   }
 }
 
 @for $i from 28 through 31 {
-  .calendar-#{$i} :nth-child(#{$i}) ~ * {
+  .calendar-#{$i} :nth-child(#{$i}) ~ div {
     display: none;
   }
 }
@@ -49,6 +47,6 @@ $week: ("mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6);
 
 @each $day, $factor in $week {
   .calendar-#{$day} div:first-child {
-    margin-left: calc( #{$day-outer-width} * #{$factor} + #{$factor}px);
+    margin-left: calc( #{$day-outer-width} * #{$factor} + #{$factor}px + 1px);
   }
 }
